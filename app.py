@@ -16,7 +16,7 @@ def upload_score():
     time = data.get('time')
     if not username or not isinstance(score, int) or IsInvalid(username):
         return jsonify({'error': 'Invalid input'}), 400
-    elif len(username) < 5 or len(username) > 20:
+    elif len(username) < 3 or len(username) > 20:
         return jsonify({'error': 'Username must be between 5 and 20 characters'}), 401
     else:
         database.log_score(username, score, time)
