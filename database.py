@@ -43,6 +43,7 @@ def refresh_leaderboard():
 def get_leaderboard():
     conn = sqlite3.connect('data.db')
     cursor = conn.execute('SELECT username, score, time FROM leaderboard ORDER BY score DESC')
-    leaderboard = cursor.fetchall()
+    rows = cursor.fetchall()
+    leaderboard = [{'username': row[0], 'score': row[1], 'time': row[2]} for row in rows]
     conn.close()
     return leaderboard
