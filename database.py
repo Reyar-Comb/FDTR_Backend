@@ -47,3 +47,4 @@ def get_leaderboard():
     leaderboard = [{'username': row[0], 'score': row[1], 'time': row[2]} for row in rows]
     conn.close()
     return leaderboard
+

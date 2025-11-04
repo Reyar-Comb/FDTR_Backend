@@ -17,7 +17,7 @@ def upload_score():
     if not username or not isinstance(score, int) or IsInvalid(username):
         return jsonify({'error': 'Invalid input'}), 400
     elif len(username) < 5 or len(username) > 20:
-        return jsonify({'error': 'Username must be between 5 and 20 characters'}), 400
+        return jsonify({'error': 'Username must be between 5 and 20 characters'}), 401
     else:
         database.log_score(username, score, time)
         return jsonify({'message': 'Score uploaded'})
@@ -26,6 +26,8 @@ def upload_score():
 def get_leaderboard():
     leaderboard = database.get_leaderboard()
     return jsonify(leaderboard)
+
+
 
 def IsInvalid(username):
     for char in username:
