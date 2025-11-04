@@ -33,7 +33,16 @@ def log_score(username, score, time):
 def refresh_leaderboard():
     conn = sqlite3.connect('data.db')
     conn.execute('DELETE FROM leaderboard')
-    cursor = conn.execute('SELECT username, score, time FROM history ORDER BY score DESC LIMIT 10')
+    cursor = conn.execute('''
+        SELECT h.username, h.score, h.time 
+        FROM history h
+        INNER JOIN (
+            SELECT username, MAX(score) as max_score
+            FROM history
+            GROUP BY username
+        ) m ON h.username = m.username AND h.score = m.max_score
+        ORDER BY h.score DESC LIMIT 10
+    ''')
     top_scores = cursor.fetchall()
     for entry in top_scores:
         conn.execute('INSERT INTO leaderboard (username, score, time) VALUES (?, ?, ?)', entry)
@@ -41,6 +50,7 @@ def refresh_leaderboard():
     conn.close()
 
 def get_leaderboard():
+    refresh_leaderboard()
     conn = sqlite3.connect('data.db')
     cursor = conn.execute('SELECT username, score, time FROM leaderboard ORDER BY score DESC')
     rows = cursor.fetchall()
