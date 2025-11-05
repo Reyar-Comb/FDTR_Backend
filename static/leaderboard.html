@@ -63,7 +63,7 @@
             
             try {
                 // 假设服务器在 localhost:5067，替换为你的公网 IP
-                const response = await fetch('http://localhost:5067/leaderboard');
+                const response = await fetch('http://47.115.77.27:5067/leaderboard');
                 if (!response.ok) throw new Error('网络错误');
                 const data = await response.json();
                 
