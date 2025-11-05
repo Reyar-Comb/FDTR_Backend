@@ -27,7 +27,9 @@ def get_leaderboard():
     leaderboard = database.get_leaderboard()
     return jsonify(leaderboard)
 
-
+@app.route('/leaderboard_page', methods=['GET'])
+def leaderboard_page():
+    return app.send_static_file('leaderboard.html')
 
 def IsInvalid(username):
     for char in username:
