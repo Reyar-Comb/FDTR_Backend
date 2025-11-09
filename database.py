@@ -41,7 +41,7 @@ def refresh_leaderboard():
             FROM history
             GROUP BY username
         ) m ON h.username = m.username AND h.score = m.max_score
-        ORDER BY h.score DESC LIMIT 30
+        ORDER BY h.score DESC LIMIT 100
     ''')
     top_scores = cursor.fetchall()
     for entry in top_scores:
